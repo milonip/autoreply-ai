@@ -45,7 +45,7 @@ export default function Home() {
     },
   });
 
-  const handleGenerateReplies = (message: string, tone: string, provider: string) => {
+  const handleGenerateReplies = (message: string, tone: string) => {
     if (!message.trim()) {
       toast({
         title: "Message required",
@@ -58,7 +58,6 @@ export default function Home() {
     generateRepliesMutation.mutate({
       message: message.trim(),
       tone: tone as "friendly" | "professional" | "empathetic" | "blunt",
-      provider: provider as "openai" | "groq" | "ollama" | "demo",
     });
   };
 

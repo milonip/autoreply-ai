@@ -17,10 +17,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const { message, tone, provider } = validation.data;
+      const { message, tone } = validation.data;
 
-      // Generate replies using selected provider
-      const replies = await generateReplies({ message, tone, provider });
+      // Generate replies using Groq
+      const replies = await generateReplies({ message, tone, provider: "groq" });
 
       // Validate response format
       const response = { replies };

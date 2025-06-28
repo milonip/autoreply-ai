@@ -7,14 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Zap, Loader2 } from "lucide-react";
 
 interface MessageInputProps {
-  onGenerateReplies: (message: string, tone: string, provider: string) => void;
+  onGenerateReplies: (message: string, tone: string) => void;
   isLoading: boolean;
 }
 
 export function MessageInput({ onGenerateReplies, isLoading }: MessageInputProps) {
   const [message, setMessage] = useState("");
   const [tone, setTone] = useState("friendly");
-  const [provider, setProvider] = useState("groq");
 
   // Load saved tone preference
   useEffect(() => {
@@ -33,7 +32,7 @@ export function MessageInput({ onGenerateReplies, isLoading }: MessageInputProps
     if (!message.trim()) {
       return;
     }
-    onGenerateReplies(message.trim(), tone, provider);
+    onGenerateReplies(message.trim(), tone);
   };
 
   const handleClear = () => {
@@ -69,39 +68,21 @@ export function MessageInput({ onGenerateReplies, isLoading }: MessageInputProps
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="tone-select" className="block text-sm font-medium text-slate-700 mb-2">
-              Reply Tone
-            </Label>
-            <Select value={tone} onValueChange={setTone} disabled={isLoading}>
-              <SelectTrigger className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="friendly">😊 Friendly</SelectItem>
-                <SelectItem value="professional">💼 Professional</SelectItem>
-                <SelectItem value="empathetic">🤝 Empathetic</SelectItem>
-                <SelectItem value="blunt">⚡ Blunt</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div>
-            <Label htmlFor="provider-select" className="block text-sm font-medium text-slate-700 mb-2">
-              AI Provider
-            </Label>
-            <Select value={provider} onValueChange={setProvider} disabled={isLoading}>
-              <SelectTrigger className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="groq">🚀 Groq (Free & Fast)</SelectItem>
-                <SelectItem value="openai">🧠 OpenAI (Premium)</SelectItem>
-                <SelectItem value="demo">💡 Demo Mode</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <div>
+          <Label htmlFor="tone-select" className="block text-sm font-medium text-slate-700 mb-2">
+            Reply Tone
+          </Label>
+          <Select value={tone} onValueChange={setTone} disabled={isLoading}>
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="friendly">😊 Friendly</SelectItem>
+              <SelectItem value="professional">💼 Professional</SelectItem>
+              <SelectItem value="empathetic">🤝 Empathetic</SelectItem>
+              <SelectItem value="blunt">⚡ Blunt</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <Button
