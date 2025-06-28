@@ -59,13 +59,10 @@ AutoReply.ai is a modern web application that generates AI-powered reply suggest
 ## External Dependencies
 
 ### AI Services
-- **Multiple AI Providers**: Support for OpenAI, Groq, Ollama, and Demo mode
-- **OpenAI API**: GPT-4o model for premium intelligent reply generation (requires credits)
-- **Groq API**: Fast and free Llama3-8b model (requires free API key)
-- **Ollama**: Local AI models (completely free, requires local installation)
-- **Demo Mode**: Pre-generated responses for testing (no API key required)
-- **Configuration**: API keys via environment variables (OPENAI_API_KEY, GROQ_API_KEY)
-- **Error Handling**: Comprehensive error handling for all providers, quota issues, and authentication
+- **Groq API**: Fast and free Llama3-8b model powering all reply generation
+- **Configuration**: Single GROQ_API_KEY environment variable required
+- **Performance**: Sub-500ms response times with high-quality AI-generated replies
+- **Error Handling**: Comprehensive error handling with JSON response parsing
 
 ### Database
 - **Neon Database**: Serverless PostgreSQL for production

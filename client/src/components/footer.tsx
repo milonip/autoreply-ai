@@ -8,7 +8,7 @@ export function Footer() {
             <span className="text-slate-600 text-sm">AutoReply.ai - Smart Message Replies</span>
           </div>
           <div className="text-sm text-slate-500">
-            Powered by OpenAI GPT
+            Powered by Groq AI
           </div>
         </div>
       </div>
