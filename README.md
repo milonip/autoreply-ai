@@ -14,6 +14,11 @@ AutoReply.ai is a modern web application that generates contextually appropriate
 - **🎨 Modern UI**: Clean, accessible interface built with Radix UI and Tailwind CSS
 - **🔒 Privacy First**: Your messages are processed securely and not stored
 
+## Visuals
+
+<img width="1470" alt="Screenshot 2025-06-28 at 5 41 52 PM" src="https://github.com/user-attachments/assets/e67c12ab-004e-482b-b761-d56975ee9f04" />
+<img width="1470" alt="Screenshot 2025-06-28 at 5 42 25 PM" src="https://github.com/user-attachments/assets/175d2750-1e96-4bc0-bf0f-7d145ffbb0bb" />
+
 ## Live Demo
 
 Try AutoReply.ai live: 
