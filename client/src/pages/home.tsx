@@ -58,6 +58,7 @@ export default function Home() {
     generateRepliesMutation.mutate({
       message: message.trim(),
       tone: tone as "friendly" | "professional" | "empathetic" | "blunt",
+      provider: provider as "openai" | "groq" | "ollama" | "demo",
     });
   };
 

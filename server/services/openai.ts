@@ -13,10 +13,10 @@ const groq = new Groq({
 export interface GenerateRepliesOptions {
   message: string;
   tone: "friendly" | "professional" | "empathetic" | "blunt";
-  provider?: "openai" | "groq" | "ollama";
+  provider?: "openai" | "groq" | "ollama" | "demo";
 }
 
-export async function generateReplies({ message, tone, provider = "openai" }: GenerateRepliesOptions): Promise<Array<{ text: string; tone: string }>> {
+export async function generateReplies({ message, tone, provider = "groq" }: GenerateRepliesOptions): Promise<Array<{ text: string; tone: string }>> {
   try {
     const toneDescriptions = {
       friendly: "warm, casual, and approachable",
@@ -91,6 +91,32 @@ Respond with JSON in this exact format:
       }
       
       return result.replies;
+    } else if (provider === "demo") {
+      // Demo mode with pre-generated responses
+      const demoReplies = {
+        friendly: [
+          { text: "Hi! Thanks for reaching out. I'd be happy to help with that!", tone },
+          { text: "Hey there! That sounds great - I'm definitely interested in discussing this further.", tone },
+          { text: "Thanks for thinking of me! Let me know when would be a good time to chat.", tone }
+        ],
+        professional: [
+          { text: "Thank you for your message. I will review the details and respond promptly.", tone },
+          { text: "I acknowledge receipt of your email and will provide a comprehensive response shortly.", tone },
+          { text: "Thank you for bringing this to my attention. I will address your concerns accordingly.", tone }
+        ],
+        empathetic: [
+          { text: "I understand this must be important to you. Let me help you work through this.", tone },
+          { text: "Thank you for sharing this with me. I can see why this matters to you.", tone },
+          { text: "I appreciate you taking the time to explain this. Let's find the best way forward together.", tone }
+        ],
+        blunt: [
+          { text: "Got it. I'll get back to you by end of day.", tone },
+          { text: "Understood. Will handle this immediately.", tone },
+          { text: "Received. Expect a response within 24 hours.", tone }
+        ]
+      };
+      
+      return demoReplies[tone] || demoReplies.friendly;
     } else {
       // Use OpenAI API (requires credits)
       response = await openai.chat.completions.create({

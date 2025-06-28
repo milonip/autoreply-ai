@@ -22,7 +22,7 @@ export const replyRequestSchema = z.object({
   tone: z.enum(["friendly", "professional", "empathetic", "blunt"], {
     required_error: "Tone is required",
   }),
-  provider: z.enum(["openai", "groq", "ollama"]).optional().default("openai"),
+  provider: z.enum(["openai", "groq", "ollama", "demo"]).optional().default("groq"),
 });
 
 export const replySchema = z.object({
