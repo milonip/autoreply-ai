@@ -161,35 +161,11 @@ You must respond with ONLY valid JSON in this exact format (no other text):
 
     let content = response.choices[0].message.content || "{}";
     
-    // Clean up the response for Groq (sometimes includes extra text)
+    // Clean up the response for Groq (extract JSON from response)
     if (provider === "groq") {
-      console.log("Raw Groq response:", content);
-      
-      // Try multiple approaches to extract JSON
-      let jsonContent = null;
-      
-      // Look for JSON block between curly braces
       const jsonMatch = content.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
-        jsonContent = jsonMatch[0];
-      }
-      
-      // If no JSON found, try to parse manual replies from text
-      if (!jsonContent) {
-        console.log("No JSON found, creating manual replies from text");
-        // Extract reply-like text and format as JSON
-        const replyTexts = [
-          `Hi! Thanks for reaching out about the follow-up. I'd be happy to schedule a time to discuss the project timeline!`,
-          `Hey there! That sounds great - let's definitely find a time that works for both of us to go over the details.`,
-          `Thanks for thinking of me! I'm available most afternoons this week. What day works best for you?`
-        ];
-        
-        content = JSON.stringify({
-          replies: replyTexts.map(text => ({ text, tone }))
-        });
-      } else {
-        content = jsonContent;
-        console.log("Extracted JSON:", content);
+        content = jsonMatch[0];
       }
     }
     
