@@ -17,10 +17,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const { message, tone } = validation.data;
+      const { message, tone, provider } = validation.data;
 
-      // Generate replies using OpenAI
-      const replies = await generateReplies({ message, tone });
+      // Generate replies using selected provider
+      const replies = await generateReplies({ message, tone, provider });
 
       // Validate response format
       const response = { replies };

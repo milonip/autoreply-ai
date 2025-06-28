@@ -45,7 +45,7 @@ export default function Home() {
     },
   });
 
-  const handleGenerateReplies = (message: string, tone: string) => {
+  const handleGenerateReplies = (message: string, tone: string, provider: string) => {
     if (!message.trim()) {
       toast({
         title: "Message required",
