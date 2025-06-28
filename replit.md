@@ -95,7 +95,9 @@ AutoReply.ai is a modern web application that generates AI-powered reply suggest
 ## Changelog
 
 Changelog:
-- June 28, 2025. Initial setup
+- June 28, 2025: Initial setup with full-stack application
+- June 28, 2025: Simplified to use only Groq AI (removed provider selector)
+- June 28, 2025: Created comprehensive GitHub-ready documentation (README.md, LICENSE, .env.example)
 
 ## User Preferences
 
