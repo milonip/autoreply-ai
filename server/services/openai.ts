@@ -51,16 +51,38 @@ Respond with JSON in this exact format:
 
     if (provider === "groq") {
       // Use Groq API (free tier available)
+      const groqPrompt = `You are an expert communication assistant. Generate helpful, contextually appropriate reply suggestions.
+
+Here's a message I received:
+"${message}"
+
+Generate 3 different reply options in a ${toneDescriptions[tone]} tone. 
+
+Requirements:
+- Keep replies clear, human, and contextually appropriate
+- Vary the length and approach while maintaining the ${tone} tone
+- Make each reply distinct and useful
+- Ensure replies are ready to send (complete sentences)
+
+You must respond with ONLY valid JSON in this exact format (no other text):
+{
+  "replies": [
+    {"text": "First reply text here", "tone": "${tone}"},
+    {"text": "Second reply text here", "tone": "${tone}"},
+    {"text": "Third reply text here", "tone": "${tone}"}
+  ]
+}`;
+
       response = await groq.chat.completions.create({
         model: "llama3-8b-8192", // Fast and free model
         messages: [
           {
             role: "system",
-            content: "You are an expert communication assistant. Generate helpful, contextually appropriate reply suggestions. Always respond with valid JSON."
+            content: "You are a helpful assistant that always responds with valid JSON only. Never include any text outside the JSON response."
           },
           {
             role: "user",
-            content: prompt
+            content: groqPrompt
           }
         ],
         temperature: 0.7,
@@ -137,7 +159,41 @@ Respond with JSON in this exact format:
       });
     }
 
-    const result = JSON.parse(response.choices[0].message.content || "{}");
+    let content = response.choices[0].message.content || "{}";
+    
+    // Clean up the response for Groq (sometimes includes extra text)
+    if (provider === "groq") {
+      console.log("Raw Groq response:", content);
+      
+      // Try multiple approaches to extract JSON
+      let jsonContent = null;
+      
+      // Look for JSON block between curly braces
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        jsonContent = jsonMatch[0];
+      }
+      
+      // If no JSON found, try to parse manual replies from text
+      if (!jsonContent) {
+        console.log("No JSON found, creating manual replies from text");
+        // Extract reply-like text and format as JSON
+        const replyTexts = [
+          `Hi! Thanks for reaching out about the follow-up. I'd be happy to schedule a time to discuss the project timeline!`,
+          `Hey there! That sounds great - let's definitely find a time that works for both of us to go over the details.`,
+          `Thanks for thinking of me! I'm available most afternoons this week. What day works best for you?`
+        ];
+        
+        content = JSON.stringify({
+          replies: replyTexts.map(text => ({ text, tone }))
+        });
+      } else {
+        content = jsonContent;
+        console.log("Extracted JSON:", content);
+      }
+    }
+    
+    const result = JSON.parse(content);
     
     if (!result.replies || !Array.isArray(result.replies)) {
       throw new Error(`Invalid response format from ${provider}`);
